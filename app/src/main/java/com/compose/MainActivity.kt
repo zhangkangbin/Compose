@@ -7,9 +7,11 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Surface
+import androidx.compose.material.Text
+
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -28,41 +30,23 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             ComposeTheme {
+
+
                 // A surface container using the 'background' color from the theme
-                Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
-                    Greeting("Android")
+                Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colors.background) {
+                    Greeting("Android Studio!123")
                 }
             }
         }
 
 
 
-
-        HttpTool.getIntance.create(BaseApi::class.java).articleList().enqueue(object :Callback<AticleListBean>{
-            override fun onResponse(call: Call<AticleListBean>, response: Response<AticleListBean>) {
-                response.body()?.errorMsg?.let { Log.d("mytest", it) };
-                response.body()?.errorCode?.let { Log.d("mytest", it.toString()) };
-            }
-
-            override fun onFailure(call: Call<AticleListBean>, t: Throwable) {
-                // TODO("Not yet implemented")
-            }
-
-        });
-
-
     }
+
+
+
 }
-/*fun   downLoad(){
-    val listener: DownloadListener = object : DownloadListener() {
 
-        override fun onDownloadSuccess(item: VideoTaskItem?) {
-            super.onDownloadSuccess(item)
-        }
-    }
-    VideoDownloadManager.getInstance().setGlobalDownloadListener(listener);
-
-}*/
 @Composable
 fun Greeting(name: String) {
 
@@ -83,6 +67,8 @@ fun Greeting(name: String) {
            .clickable {
 
                Log.d("mytest", "my is log..");
+
+               getHttpData()
            })
    }
 
@@ -107,4 +93,65 @@ fun getData(): MutableList<ListData> {
     return data;
 
 }
+fun log(text:String){
+    Log.d("mytest", text)
+
+}
+
+fun getHttpData(){
+
+    HttpTool.getIntance.create(BaseApi::class.java).articleList().enqueue(object :Callback<AticleListBean>{
+        override fun onResponse(call: Call<AticleListBean>, response: Response<AticleListBean>) {
+            response.body()?.errorMsg?.let { Log.d("mytest", it) };
+            val  data=response.body()?.takeIf {
+                it.errorCode==0
+            }?.data?.datas;
+
+            data?.forEach {
+
+                log(it.title)
+            }
+
+        }
+
+        override fun onFailure(call: Call<AticleListBean>, t: Throwable) {
+
+            Log.d("mytest", t.message.toString())
+
+        }
+
+    });
+}
+
+@Composable
+fun MessageList(messages: List<AticleListBean.Data.Data>) {
+    LazyColumn {
+        items(messages) { message ->
+            Column {
+                Image(
+                    painter = painterResource(R.mipmap.bao),
+                    contentDescription = "Contact profile picture",
+                    modifier= Modifier
+                        .height(100.dp)
+                        .width(100.dp)
+                        .padding(15.dp)
+                )
+
+
+                Text(text = "Helld  oA $messages.", modifier = Modifier
+                    .padding(15.dp)
+                    .clickable {
+
+                        Log.d("mytest", "my is log..");
+
+                        getHttpData()
+                    })
+            }
+
+        }
+    }
+}
 data class ListData(val name: String, var age: Int)
+
+
+
