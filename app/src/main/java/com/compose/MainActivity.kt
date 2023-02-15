@@ -8,9 +8,10 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
+import androidx.compose.foundation.lazy.items
+import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Search
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -20,7 +21,9 @@ import androidx.compose.ui.unit.dp
 import com.compose.api.BaseApi
 import com.compose.api.bean.AticleListBean
 import com.compose.http.HttpTool
+import com.compose.ui.home.homeListCard
 import com.compose.ui.theme.ComposeTheme
+import com.compose.ui.theme.Purple700
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -31,10 +34,11 @@ class MainActivity : ComponentActivity() {
         setContent {
             ComposeTheme {
 
-
                 // A surface container using the 'background' color from the theme
-                Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colors.background) {
-                    Greeting("Android Studio!123")
+                Surface(color = Purple700) {
+                  //  listView(getData())
+
+                    homeListCard();
                 }
             }
         }
@@ -89,6 +93,9 @@ fun getData(): MutableList<ListData> {
     data.add(ListData("Adam1", 21));
     data.add(ListData("Adam1", 22));
     data.add(ListData("Adam3", 23));
+    data.add(ListData("Adam3", 23));
+    data.add(ListData("Adam3", 23));
+    data.add(ListData("Adam1", 123));
 
     return data;
 
@@ -112,6 +119,8 @@ fun getHttpData(){
                 log(it.title)
             }
 
+           // MessageList(data);
+
         }
 
         override fun onFailure(call: Call<AticleListBean>, t: Throwable) {
@@ -122,7 +131,46 @@ fun getHttpData(){
 
     });
 }
+@Composable
+fun listView(messages: List<ListData>) {
+    Column{
 
+        Button(onClick = {
+            log("我被按下了")
+        }) {
+            Icon(imageVector = Icons.Default.Search, contentDescription = null)
+            Text(text = "最简单Button")
+        }
+
+
+        LazyColumn {
+            items(messages) { message ->
+                Column {
+                    Image(
+                        painter = painterResource(R.mipmap.bao),
+                        contentDescription = "Contact profile picture",
+                        modifier= Modifier
+                            .height(100.dp)
+                            .width(100.dp)
+                            .padding(15.dp)
+                    )
+
+
+                    Text(text = "Helld  oA ${message.name}", modifier = Modifier
+                        .padding(15.dp)
+                        .clickable {
+
+                            Log.d("mytest", "my is log..");
+
+
+                        })
+                }
+
+            }
+        }
+    }
+
+}
 @Composable
 fun MessageList(messages: List<AticleListBean.Data.Data>) {
     LazyColumn {
