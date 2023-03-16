@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.dp
 import com.compose.api.BaseApi
 import com.compose.api.bean.AticleListBean
 import com.compose.http.HttpTool
+import com.compose.ui.ComposeState
 import com.compose.ui.home.homeListCard
 import com.compose.ui.theme.ComposeTheme
 import com.compose.ui.theme.Purple700
@@ -38,22 +39,19 @@ class MainActivity : ComponentActivity() {
                 Surface(color = Purple700) {
                   //  listView(getData())
 
-                    homeListCard();
+                    //homeListCard();
+                    ComposeState().ListMainView()
                 }
             }
         }
 
-
-
     }
-
 
 
 }
 
 @Composable
 fun Greeting(name: String) {
-
 
    Column {
        Image(
@@ -86,20 +84,7 @@ fun DefaultPreview() {
         Greeting("Android AQQQAAAA")
     }
 }
-fun getData(): MutableList<ListData> {
 
-    val data = mutableListOf(ListData("Adam", 20));
-
-    data.add(ListData("Adam1", 21));
-    data.add(ListData("Adam1", 22));
-    data.add(ListData("Adam3", 23));
-    data.add(ListData("Adam3", 23));
-    data.add(ListData("Adam3", 23));
-    data.add(ListData("Adam1", 123));
-
-    return data;
-
-}
 fun log(text:String){
     Log.d("mytest", text)
 
@@ -131,75 +116,6 @@ fun getHttpData(){
 
     });
 }
-@Composable
-fun listView(messages: List<ListData>) {
-    Column{
-
-        Button(onClick = {
-            log("我被按下了")
-        }) {
-            Icon(imageVector = Icons.Default.Search, contentDescription = null)
-            Text(text = "最简单Button")
-        }
-
-
-        LazyColumn {
-            items(messages) { message ->
-                Column {
-                    Image(
-                        painter = painterResource(R.mipmap.bao),
-                        contentDescription = "Contact profile picture",
-                        modifier= Modifier
-                            .height(100.dp)
-                            .width(100.dp)
-                            .padding(15.dp)
-                    )
-
-
-                    Text(text = "Helld  oA ${message.name}", modifier = Modifier
-                        .padding(15.dp)
-                        .clickable {
-
-                            Log.d("mytest", "my is log..");
-
-
-                        })
-                }
-
-            }
-        }
-    }
-
-}
-@Composable
-fun MessageList(messages: List<AticleListBean.Data.Data>) {
-    LazyColumn {
-        items(messages) { message ->
-            Column {
-                Image(
-                    painter = painterResource(R.mipmap.bao),
-                    contentDescription = "Contact profile picture",
-                    modifier= Modifier
-                        .height(100.dp)
-                        .width(100.dp)
-                        .padding(15.dp)
-                )
-
-
-                Text(text = "Helld  oA $messages.", modifier = Modifier
-                    .padding(15.dp)
-                    .clickable {
-
-                        Log.d("mytest", "my is log..");
-
-                        getHttpData()
-                    })
-            }
-
-        }
-    }
-}
-data class ListData(val name: String, var age: Int)
 
 
 
