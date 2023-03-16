@@ -39,9 +39,9 @@ class ComposeWithViewModelUi{
         LazyColumn{
 
             //用key 防止数据错乱。
-            items(items = wellnessViewModel.tasks, key = { it.id } ){
-                ListState(it) {
-                    wellnessViewModel.remove(it)
+            items(items = wellnessViewModel.tasks, key = { it.id } ){ task->
+                ListState(task) {
+                    wellnessViewModel.remove(task)
                 }
 
 
