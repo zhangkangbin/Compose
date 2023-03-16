@@ -17,16 +17,16 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 class ComposeWithViewModel :ViewModel() {
 
     private val _tasks = getWellnessTasks().toMutableStateList()
-    val tasks: List<WellnessTask>
+    val tasks: List<WellnessTaskViewModel>
         get() = _tasks
 
-    fun remove(item: WellnessTask) {
+    fun remove(item: WellnessTaskViewModel) {
         _tasks.remove(item)
     }
 
 }
 
-private fun getWellnessTasks() = List(30) { i -> WellnessTask(i, "Task # $i") }
+private fun getWellnessTasks() = List(30) { i -> WellnessTaskViewModel(i, "Task # $i") }
 
 
 class ComposeWithViewModelUi{
@@ -49,10 +49,10 @@ class ComposeWithViewModelUi{
         }
     }
     @Composable
-    fun  ListState(data: WellnessTask, tasks: () -> Unit){
+    fun  ListState(data: WellnessTaskViewModel, tasks: () -> Unit){
         //var show by remember { mutableStateOf(false) }
-        var show by rememberSaveable  { mutableStateOf(true) }
-        ListItem(data.label,show,{ show = !show },tasks)
+        val show =data.checked.value
+        ListItem(data.label,show,{ data.checked.value=!show; },tasks)
     }
     @Composable
     fun ListItem(label:String,isShow: Boolean, onCheckedChange: (Boolean) -> Unit,onClick:()->Unit){
@@ -69,3 +69,7 @@ class ComposeWithViewModelUi{
 
     }
 }
+
+data class WellnessTaskViewModel(val id: Int,
+                                 val label: String,
+                                 var checked: MutableState<Boolean> = mutableStateOf(false) )
