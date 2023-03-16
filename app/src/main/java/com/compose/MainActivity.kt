@@ -7,11 +7,8 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Search
+
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -22,7 +19,6 @@ import com.compose.api.BaseApi
 import com.compose.api.bean.AticleListBean
 import com.compose.http.HttpTool
 import com.compose.ui.ComposeState
-import com.compose.ui.home.homeListCard
 import com.compose.ui.theme.ComposeTheme
 import com.compose.ui.theme.Purple700
 import retrofit2.Call
@@ -33,6 +29,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
+
             ComposeTheme {
 
                 // A surface container using the 'background' color from the theme

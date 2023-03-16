@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Compose</string>
+    <string name="app_tips">input something....</string>
 </resources>
