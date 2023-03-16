@@ -1,4 +1,6 @@
 <resources>
     <string name="app_name">Compose</string>
     <string name="app_tips">input something....</string>
+    <string name="bottom_navigation_home">home</string>
+    <string name="bottom_navigation_profile">profile</string>
 </resources>
