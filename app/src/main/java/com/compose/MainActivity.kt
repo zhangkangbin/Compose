@@ -53,6 +53,7 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun Greeting(name: String) {
 
+
    Column {
        Image(
            painter = painterResource(R.mipmap.bao),

@@ -124,7 +124,7 @@ class ComposeState {
         StatefulCounter(modifier)
     }
 
-    private fun getWellnessTasks() = List(30) { i -> WellnessTask(i, "Task # $i") }
+     fun getWellnessTasks() = List(30) { i -> WellnessTask(i, "Task # $i") }
 
     @Preview
     @Composable
