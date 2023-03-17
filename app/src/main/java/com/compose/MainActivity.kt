@@ -18,6 +18,7 @@ import androidx.compose.ui.unit.dp
 import com.compose.api.BaseApi
 import com.compose.api.bean.AticleListBean
 import com.compose.http.HttpTool
+import com.compose.ui.ComposeNavigation
 import com.compose.ui.ComposeState
 import com.compose.ui.theme.ComposeTheme
 import com.compose.ui.theme.Purple700
@@ -37,7 +38,8 @@ class MainActivity : ComponentActivity() {
                   //  listView(getData())
 
                     //homeListCard();
-                    ComposeState().ListMainView()
+                    //ComposeState().ListMainView()
+                    ComposeNavigation().ComposeNavigationScreen()
                 }
             }
         }
