@@ -23,6 +23,7 @@ import com.compose.ui.list.ListScreenData
  * 当一个LaunchedEffect中依赖的State会频繁变化时，不应该使用State的值作为key，
  * 而应该将State本身作为key，然后在LaunchedEffect内部使用snapshotFlow依赖状态。
  * 使用State作为key是为了当State对象本身变化时重启副作用。
+ *
  */
 class SnapshotFlowScreen {
 
@@ -36,7 +37,7 @@ class SnapshotFlowScreen {
 
         LazyColumn(state = stateList){
             items(task, key ={it.id}){
-                itemUi(it.id)
+                ItemUi(it.id)
             }
         }
 
@@ -60,7 +61,7 @@ class SnapshotFlowScreen {
     }
 
     @Composable
-    fun itemUi(index:Int){
+    fun ItemUi(index:Int){
 
      Text(text = "item $index",
          Modifier
