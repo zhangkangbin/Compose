@@ -40,6 +40,8 @@ class MainActivity : ComponentActivity() {
                     //homeListCard();
                     //ComposeState().ListMainView()
                     ComposeNavigation().ComposeNavigationScreen()
+
+                  //  startActivity()
                 }
             }
         }
