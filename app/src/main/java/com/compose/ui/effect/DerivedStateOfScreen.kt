@@ -1,13 +1,20 @@
 package com.compose.ui.effect
 
+import android.util.Log
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.material.Button
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import com.compose.ui.list.ListScreenViewModel
+import kotlinx.coroutines.launch
 
 /**
  * 文章
@@ -27,23 +34,47 @@ class DerivedStateOfScreen {
     @Preview
     @Composable
     fun DerivedStateOfScreenUi(){
-        val count = remember {
-            mutableStateOf(0)
-        }
 
-        //
-        val result = remember {
+
+        val stateList = rememberLazyListState()
+        val viewModel= ListScreenViewModel()
+
+        val isEnabled by remember {
             derivedStateOf {
-                count.value++
+                //偏移量大于10，才会启动。避免无意义的状态更新。
+                stateList.firstVisibleItemIndex > 10
             }
         }
-        val viewModel= ListScreenViewModel()
-        Scaffold {paddingValue->
 
-            LazyColumn(Modifier.padding(paddingValue)){
+        val scope= rememberCoroutineScope()
 
-                items(viewModel.tasks){
-                    Text(text = "items:")
+        Scaffold(floatingActionButton = {
+
+            Log.d("mytest","-------------避免无意义的组件重组。---update--------------")
+            Button(enabled = isEnabled,onClick = {
+                scope.launch {
+                    Log.d("mytest","------------Button onClick---------")
+                     stateList.animateScrollToItem(0,stateList.firstVisibleItemScrollOffset)
+
+                }
+
+            }) {
+                Text(text = "Up to top")
+            }
+
+        }) {paddingValue->
+
+            LazyColumn(Modifier.padding(paddingValue),state = stateList){
+
+                items(viewModel.tasks, key = {
+                    it.id
+                }){
+
+
+                    Text(text = "items:${it.id}",
+                        Modifier
+                            .padding(20.dp)
+                            .fillMaxWidth())
                 }
 
             }
@@ -57,6 +88,5 @@ class DerivedStateOfScreen {
 
 }
 
-data class DerivedStateBean(var isCheck:Boolean, val name:String)
 
 

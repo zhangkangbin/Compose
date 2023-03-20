@@ -13,7 +13,7 @@ class ListScreenViewModel :ViewModel() {
     fun remove(item: ListScreenData) {
         _tasks.remove(item)
     }
-    private fun getWellnessTasks() = List(15) { i -> ListScreenData(i, "Task # $i") }
+    private fun getWellnessTasks() = List(35) { i -> ListScreenData(i, "Task # $i") }
 }
 
 
