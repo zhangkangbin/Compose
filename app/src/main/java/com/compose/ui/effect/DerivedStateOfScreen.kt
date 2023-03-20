@@ -41,7 +41,7 @@ class DerivedStateOfScreen {
 
         val isEnabled by remember {
             derivedStateOf {
-                //偏移量大于10，才会启动。避免无意义的状态更新。
+                //偏移量大于10，才会启用滚动到顶部的按钮。避免无意义的状态更新。
                 stateList.firstVisibleItemIndex > 10
             }
         }
@@ -59,7 +59,7 @@ class DerivedStateOfScreen {
                 }
 
             }) {
-                Text(text = "Up to top")
+                Text(text = "Scroll to top")
             }
 
         }) {paddingValue->
