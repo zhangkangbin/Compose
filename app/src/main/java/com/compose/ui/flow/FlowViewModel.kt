@@ -1,43 +1,68 @@
 package com.compose.ui.flow
 
 import android.util.Log
-import androidx.compose.runtime.Composable
+import androidx.compose.material.Text
+import androidx.compose.runtime.*
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.collect
 
 
 class FlowScreen{
 
+
+
     @Preview
     @Composable
     fun FlowScreenUi(){
-
+        
         val viewModel=FlowViewModel()
-
         viewModel.test()
 
+        var count by remember { mutableStateOf(0) }
+       LaunchedEffect(Unit){
+
+           viewModel.getEvent().collect{
+               count=it.id
+               Log.d("mytest","data:$it.id")
+           }
+       }
+
+        Text(text = "Test:$count")
+        
 
     }
 
 }
-
+data class FlowBean(val id:Int)
 class FlowViewModel :ViewModel() {
 
+    private val _event= MutableSharedFlow<FlowBean>()
+
+    fun getEvent(): MutableSharedFlow<FlowBean> {
+
+        return _event;
+    }
+    suspend fun postEvent(data:FlowBean){
+        _event.emit(data)
+    }
 
     fun test(){
 
-            GlobalScope.launch {
-                val withStr = withContext(Dispatchers.Default){
-                    "a"
-                }
-                val awaitStr = async {
-                    "b"
-                }
-                val list = simple()
-                Log.d("test","withStr :$withStr")
-                Log.d("test","awaitStr :${awaitStr.await()}")
-                Log.d("test","list :$list  ")
+        viewModelScope.launch {
+
+
+            var count=0;
+           while (true){
+
+               delay(1000)
+
+               postEvent(FlowBean(count++));
+           }
+
 
 
         }
