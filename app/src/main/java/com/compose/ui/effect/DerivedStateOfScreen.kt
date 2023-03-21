@@ -28,7 +28,9 @@ import com.compose.R
  * remember(key)和之间的区别derivedStateOf在于重组的数量。
  * derivedStateOf {}当您的状态或键的变化超过您想要更新 UI 时使用。
  *
- * 避免无意义的重组和更新。
+ * 1,如果某个状态是从其他状态对象计算或派生得出的，请使用 derivedStateOf
+ *
+ * 2,避免无意义的重组和更新。
  */
 class DerivedStateOfScreen {
 
