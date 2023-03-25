@@ -15,27 +15,35 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.compose.router.InterceptorViewModel
 
 /**
  * 导航
  */
 class ComposeNavigation {
 
+
     @Preview
     @Composable
     fun ComposeNavigationScreen() {
 
 
+        val navigationViewModel= InterceptorViewModel()
+
+
         val navController = rememberNavController()
+
+
+
 
         //val navController  by remember { mutableStateOf(Overview) }
         NavHost(navController = navController, startDestination = RouteConfig.Screen_A) {
             composable(RouteConfig.Screen_A) {
                 ScreenA {
                     Log.d("mytest", "-------------A screen-----------------");
-                     navController.navigateSingleTopTo("${RouteConfig.Screen_B}/kang")
-                   // navController.navigateSingleTopTo(RouteConfig.Screen_B)
-
+                   //  navController.navigateSingleTopTo("${RouteConfig.Screen_B}/kang")
+                 //   navController.navigateSingleTopTo(RouteConfig.Screen_B)
+                    navigationViewModel.navigateSingleTopTo(navController,"${RouteConfig.Screen_B}/kang")
 
                 }
             }
@@ -44,7 +52,9 @@ class ComposeNavigation {
                 ScreenB {
                     it.arguments?.getString(ParamsConfig.NAME)?.let { it1 -> Log.d("mytest", it1) }
                     Log.d("mytest", "-------------B screen-----------------");
-                    navController.navigate(RouteConfig.Screen_C)
+                  //  navController.navigate(RouteConfig.Screen_C)
+                    navigationViewModel.navigateSingleTopTo(navController,RouteConfig.Screen_C)
+
                     // navController.popBackStack()
                 }
 
@@ -53,7 +63,8 @@ class ComposeNavigation {
            composable(RouteConfig.Screen_C) {
                 ScreenC {
                     Log.d("mytest", "-------------C screen-----------------");
-                    navController.navigate(RouteConfig.Screen_A)
+                  //  navController.navigate(RouteConfig.Screen_A)
+                    navigationViewModel.navigateSingleTopTo(navController,RouteConfig.Screen_A)
                     //navController.popBackStack()
                 }
             }
@@ -90,9 +101,9 @@ class ComposeNavigation {
             Text(text = "CCC")
         }
     }
-
+/*
     private fun NavHostController.navigateSingleTopTo(route: String) =
-        this.navigate(route) { launchSingleTop = true }
+        this.navigate(route) { launchSingleTop = true }*/
 
 
 }
@@ -102,9 +113,9 @@ class ComposeNavigation {
  */
 object RouteConfig {
 
-    const val Screen_A = "A"
-    const val Screen_B = "B"
-    const val Screen_C = "C"
+    const val Screen_A = "router://A"
+    const val Screen_B = "router://B"
+    const val Screen_C = "router://C"
 }
 
 object ParamsConfig {
