@@ -1,5 +1,6 @@
 package com.compose.ui.list
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -7,10 +8,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -34,6 +32,7 @@ class ComposeListScreen {
         val lstViewModel= ListScreenViewModel()
 
         val stateList= rememberLazyListState()
+
        // stateList.animateScrollToItem()
         LazyColumn(state = stateList){
 
@@ -42,6 +41,14 @@ class ComposeListScreen {
             }){
 
                 ListItem("item:${it.label}")
+
+                LaunchedEffect(key1 = Unit) {
+                    val last=stateList.layoutInfo.visibleItemsInfo.lastOrNull()?.index
+                    Log.d("mytest","index${last}")
+                   // Log.d("mytest","index${stateList.firstVisibleItemIndex}")
+                }
+
+
 
             }
         }
