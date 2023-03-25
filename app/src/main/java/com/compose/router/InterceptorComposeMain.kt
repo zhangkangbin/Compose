@@ -11,14 +11,18 @@ import okhttp3.Route
 class InterceptorComposeMain {
 
 
-
-
-
 }
-class InterceptorViewModel:ViewModel(){
+class InterceptorViewModel(navigation: NavHostController){
+
+    private val navigation: NavHostController;
 
 
-    fun navigateSingleTopTo(navigation: NavHostController,route: String){
+     init{
+
+        this.navigation=navigation;
+    }
+
+    fun navigateSingleTopTo(route: String){
 
         val listInterceptor= listOf(LogInterceptor())
 

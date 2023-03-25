@@ -28,12 +28,12 @@ class ComposeNavigation {
     fun ComposeNavigationScreen() {
 
 
-        val navigationViewModel= InterceptorViewModel()
+
 
 
         val navController = rememberNavController()
 
-
+        val navigationViewModel= InterceptorViewModel(navController)
 
 
         //val navController  by remember { mutableStateOf(Overview) }
@@ -43,7 +43,7 @@ class ComposeNavigation {
                     Log.d("mytest", "-------------A screen-----------------");
                    //  navController.navigateSingleTopTo("${RouteConfig.Screen_B}/kang")
                  //   navController.navigateSingleTopTo(RouteConfig.Screen_B)
-                    navigationViewModel.navigateSingleTopTo(navController,"${RouteConfig.Screen_B}/kang")
+                    navigationViewModel.navigateSingleTopTo("${RouteConfig.Screen_B}/kang")
 
                 }
             }
@@ -53,7 +53,7 @@ class ComposeNavigation {
                     it.arguments?.getString(ParamsConfig.NAME)?.let { it1 -> Log.d("mytest", it1) }
                     Log.d("mytest", "-------------B screen-----------------");
                   //  navController.navigate(RouteConfig.Screen_C)
-                    navigationViewModel.navigateSingleTopTo(navController,RouteConfig.Screen_C)
+                    navigationViewModel.navigateSingleTopTo(RouteConfig.Screen_C)
 
                     // navController.popBackStack()
                 }
@@ -64,7 +64,7 @@ class ComposeNavigation {
                 ScreenC {
                     Log.d("mytest", "-------------C screen-----------------");
                   //  navController.navigate(RouteConfig.Screen_A)
-                    navigationViewModel.navigateSingleTopTo(navController,RouteConfig.Screen_A)
+                    navigationViewModel.navigateSingleTopTo(RouteConfig.Screen_A)
                     //navController.popBackStack()
                 }
             }

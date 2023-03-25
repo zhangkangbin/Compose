@@ -32,9 +32,6 @@ internal class NavigationInterceptor(interceptorList: List<RouterInterceptor>, r
         }
 
         Log.d("mytest","----NavigationInterceptor-------")
-        request.navigation.navigate(request.router){
-            launchSingleTop=true
-        }
 
 
         val mainInterceptor = NavigationInterceptor(interceptorList, request)
@@ -44,6 +41,13 @@ internal class NavigationInterceptor(interceptorList: List<RouterInterceptor>, r
         next++
 
         val routerInterceptor=interceptor.routerInterceptor(mainInterceptor)
+
+
+        //处理一些意外情况，比如路由被上一个拦截器处理了。
+        request.navigation.navigate(request.router){
+            launchSingleTop=true
+        }
+
         //执行下一个interceptor
         //  System.out.println("这里next--" + next);
         Log.d("mytest","----NavigationInterceptor-------")
