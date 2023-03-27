@@ -21,6 +21,7 @@ import com.compose.api.bean.AticleListBean
 import com.compose.http.HttpTool
 import com.compose.ui.ComposeNavigation
 import com.compose.ui.ComposeState
+import com.compose.ui.login.LoginScreen
 import com.compose.ui.navigation.PostListScreen
 import com.compose.ui.theme.ComposeTheme
 import com.compose.ui.theme.Purple700
@@ -43,7 +44,8 @@ class MainActivity : ComponentActivity() {
                     //ComposeState().ListMainView()
                    // ComposeNavigation().ComposeNavigationScreen()
                     //PostListScreen().Content()
-                    Navigator(PostListScreen())
+                   // Navigator(PostListScreen())
+                    Navigator(LoginScreen())
                   //  startActivity()
                 }
             }
