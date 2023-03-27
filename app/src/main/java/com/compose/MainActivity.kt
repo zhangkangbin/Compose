@@ -15,11 +15,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import cafe.adriel.voyager.navigator.Navigator
 import com.compose.api.BaseApi
 import com.compose.api.bean.AticleListBean
 import com.compose.http.HttpTool
 import com.compose.ui.ComposeNavigation
 import com.compose.ui.ComposeState
+import com.compose.ui.navigation.PostListScreen
 import com.compose.ui.theme.ComposeTheme
 import com.compose.ui.theme.Purple700
 import retrofit2.Call
@@ -39,8 +41,9 @@ class MainActivity : ComponentActivity() {
 
                     //homeListCard();
                     //ComposeState().ListMainView()
-                    ComposeNavigation().ComposeNavigationScreen()
-
+                   // ComposeNavigation().ComposeNavigationScreen()
+                    //PostListScreen().Content()
+                    Navigator(PostListScreen())
                   //  startActivity()
                 }
             }
