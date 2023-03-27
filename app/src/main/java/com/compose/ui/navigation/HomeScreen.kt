@@ -8,6 +8,9 @@ import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 
+/**
+ * https://voyager.adriel.cafe/
+ */
 class PostListScreen : Screen {
 
     @Preview

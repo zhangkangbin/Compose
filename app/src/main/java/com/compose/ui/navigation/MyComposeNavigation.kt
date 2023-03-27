@@ -8,6 +8,9 @@ import androidx.navigation.NavDestination
 import androidx.navigation.NavOptions
 import androidx.navigation.Navigator
 
+/**
+ * https://voyager.adriel.cafe/
+ */
 @Navigator.Name("composable")
 class MyComposeNavigation : Navigator<MyComposeNavigation.Destination>() {
 
