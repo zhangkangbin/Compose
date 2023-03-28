@@ -69,7 +69,7 @@ class DerivedStateOfScreen {
 
             LazyColumn(Modifier.padding(paddingValue),state = stateList){
 
-                items(viewModel.tasks, key = {
+                items(viewModel.itemsList.value.list, key = {
                     it.id
                 }){
 
