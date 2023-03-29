@@ -7,6 +7,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.ViewModel
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -94,6 +95,10 @@ class FlowViewModel :ViewModel() {
     // MutableStateFlow是可以的，这样做可以避免用户在activity中有更新数据的行为
    // val stateFlow: StateFlow<Int> = mutableStateFlow
     val stateFlow=mutableStateFlow.asStateFlow()
+
+    val mutableSharedFlow = MutableSharedFlow<String>(
+        replay = 2,
+    )
     fun changeData() {
         mutableStateFlow.value= UiState(22)
        // mutableStateFlow.value.count=9669;

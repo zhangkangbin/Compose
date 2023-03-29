@@ -26,14 +26,12 @@ class LaunchedEffectScreen {
         var data by remember {
             mutableStateOf("我是默认值")
         }
-        Button(onClick = {
+
+        itemUi(data = data) {
+
             //LaunchedEffect 监听的 key，发生变化，会再次启动协程去请求结果。
             count++;
             data="去再次请求网络！！"
-
-        }) {
-
-            Text(text = data)
         }
 
         //LaunchedEffect支持观察参数key的设置，当key发生变化时，当前协程自动结束，同时开启新协程。
@@ -42,7 +40,48 @@ class LaunchedEffectScreen {
             delay(3000)
             data="我是网络请求的值！！$count"
 
+        }
 
+
+    }
+
+    /**
+     * LaunchedEffect key 为Unit，只执行一次
+     */
+    @Preview
+    @Composable
+    fun LaunchedEffectScreenUi2(){
+
+        var count by remember {
+            mutableStateOf(0)
+        }
+        var data by remember {
+            mutableStateOf("我是默认值")
+        }
+
+        itemUi(data = data) {
+            count++;
+            data="去再次请求网络！！"
+        }
+
+        //LaunchedEffect支持观察参数key的设置，当key发生变化时，当前协程自动结束，同时开启新协程。
+        LaunchedEffect(Unit){
+            Log.d("mytest","模拟耗时网络请求.....")
+            delay(3000)
+            data="我是网络请求的值！！$count"
+
+        }
+
+
+
+    }
+
+    @Composable
+    fun itemUi(data:String,onClick:()->Unit){
+
+        Button(onClick = onClick) {
+
+            Text(text = data)
         }
 
     }
