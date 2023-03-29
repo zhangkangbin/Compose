@@ -36,7 +36,7 @@ class ComposeListScreen {
        // stateList.animateScrollToItem()
         LazyColumn(state = stateList){
 
-            items(lstViewModel.tasks, key = {
+            items(lstViewModel.itemsList.value.list, key = {
                 it.id
             }){
 
