@@ -1,25 +1,16 @@
-package com.compose.ui.atest
+package com.compose.ui.state
 
 import android.util.Log
-import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.layout.Box
 import androidx.compose.material.Button
-import androidx.compose.material.Card
-import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 
-class TestUi {
+/**
+ * 测试ui 重组范围。
+ */
+class UiState {
 
     private val TAG="mytest"
 
@@ -41,7 +32,9 @@ class TestUi {
             }
         }
     }
-
+    /**
+     * 无状态组件，只在首次加载执行。状态发生改变这里也不会发生重组。
+     */
     @Composable
     fun Wrapper(content: @Composable () -> Unit) {
         Log.d(TAG, "--------Wrapper recomposing--------------")
@@ -50,7 +43,4 @@ class TestUi {
             content()
         }
     }
-
-
-
 }
