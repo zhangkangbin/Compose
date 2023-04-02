@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -21,15 +22,26 @@ import com.compose.api.bean.AticleListBean
 import com.compose.http.HttpTool
 import com.compose.ui.ComposeNavigation
 import com.compose.ui.ComposeState
+import com.compose.ui.hilt.HitScreenMain
+import com.compose.ui.hilt.Println
+import com.compose.ui.hilt.SingletonViewModel
 import com.compose.ui.login.LoginScreen
 import com.compose.ui.navigation.PostListScreen
 import com.compose.ui.theme.ComposeTheme
 import com.compose.ui.theme.Purple700
+import dagger.hilt.android.AndroidEntryPoint
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+
+    @Inject
+    lateinit var print: Println
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -45,8 +57,13 @@ class MainActivity : ComponentActivity() {
                    // ComposeNavigation().ComposeNavigationScreen()
                     //PostListScreen().Content()
                    // Navigator(PostListScreen())
-                    Navigator(LoginScreen())
-                  //  startActivity()
+                    //Navigator(LoginScreen())
+                    //HitScreenMain().testSingle()
+
+                    print.print("----------main-------")
+                    val singleton: SingletonViewModel by viewModels()
+                    //val singleton= SingletonViewModel()
+                    singleton.postData()
                 }
             }
         }

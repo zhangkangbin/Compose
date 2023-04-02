@@ -80,6 +80,8 @@ dependencies {
     // Android ViewModel integration
     implementation("cafe.adriel.voyager:voyager-navigator:1.0.0-rc04")
     implementation("cafe.adriel.voyager:voyager-androidx:1.0.0-rc04")
+
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.3.1")
 }
 
 // Allow references to generated code
