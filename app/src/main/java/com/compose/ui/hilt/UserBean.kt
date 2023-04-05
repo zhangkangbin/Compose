@@ -6,14 +6,14 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
-class UserBean {
+  class UserBean {
 
     fun getName(): String {
 
         return "kang";
     }
 }
-class SingletonObject{
+final class SingletonObject{
 
 
 }
