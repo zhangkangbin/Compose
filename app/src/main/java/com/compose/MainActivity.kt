@@ -29,6 +29,7 @@ import com.compose.ui.login.LoginScreen
 import com.compose.ui.navigation.PostListScreen
 import com.compose.ui.theme.ComposeTheme
 import com.compose.ui.theme.Purple700
+import com.compose.uitls.SharedPreferenceHelper
 import dagger.hilt.android.AndroidEntryPoint
 import retrofit2.Call
 import retrofit2.Callback
@@ -40,6 +41,7 @@ class MainActivity : ComponentActivity() {
 
     @Inject
     lateinit var print: Println
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -57,13 +59,13 @@ class MainActivity : ComponentActivity() {
                    // ComposeNavigation().ComposeNavigationScreen()
                     //PostListScreen().Content()
                    // Navigator(PostListScreen())
-                    //Navigator(LoginScreen())
+                    Navigator(LoginScreen())
                     //HitScreenMain().testSingle()
-
+/*
                     print.print("----------main-------")
                     val singleton: SingletonViewModel by viewModels()
                     //val singleton= SingletonViewModel()
-                    singleton.postData()
+                    singleton.postData()*/
                 }
             }
         }

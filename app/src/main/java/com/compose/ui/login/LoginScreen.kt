@@ -19,21 +19,18 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.ViewModel
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asSharedFlow
-import kotlinx.coroutines.flow.asStateFlow
+import com.compose.uitls.SharedPreferenceHelper
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 
 class LoginScreen :Screen{
 
-
+  //  @Inject
+   // lateinit var preference: SharedPreferenceHelper
     /**
      * 抽出所有的状态。无状态组件。
      */
@@ -88,8 +85,13 @@ class LoginScreen :Screen{
         val state by logViewModel.loginState.collectAsState()
         val navigator = LocalNavigator.currentOrThrow
 
+        if(state.isJump){
+            Log.d("mytest", "------end isJump---")
+            navigator.push(LoginSuccessScreen("kang"))
+        }
+
         var tips by rememberSaveable(Unit) { mutableStateOf("tips") }
-        LaunchedEffect(logViewModel.event ){
+        LaunchedEffect(logViewModel.event){
 
             logViewModel.event.collect{
                 when(it){
@@ -105,8 +107,10 @@ class LoginScreen :Screen{
                     LoginEvent.LoginSuccess->{
                         Log.d("mytest","LoginSuccess")
                         //replaceAll
-                        navigator.replaceAll(LoginSuccessScreen())
+                        navigator.push(LoginSuccessScreen("kang"))
                         // navigator.pop(),至少保留一个
+
+                    //   preference.setString("userName","preference:Kang")
 
                     }else->{
                        Log.d("mytest","other")
@@ -144,58 +148,4 @@ class LoginScreen :Screen{
     }
 }
 
-class LoginScreenViewModel : ViewModel() {
-    private val _loginState = MutableStateFlow(LoginUIState())
 
-    //只可读
-    val loginState = _loginState.asStateFlow()
-
-    // 事件
-    private val _event = MutableSharedFlow<LoginEvent>();
-
-    val event = _event.asSharedFlow()
-    suspend fun login(name: String,password:String) {
-        _loginState.value.isShow=false
-
-        if(name == "kang"){
-            _loginState.value.isShow=true
-            _event.emit(LoginEvent.AccountNotExist)
-            return
-        }
-        if(password == "123"){
-            _loginState.value.isShow=true
-            _event.emit(LoginEvent.PasswordInvalid)
-            return
-        }
-
-        repeat(3) {
-            delay(1000)
-
-            Log.d("mytest", "------delay---$name   $password")
-        }
-        _loginState.value.isShow=true
-
-    }
-
-}
-class LoginSuccessScreen :Screen{
-
-    @Composable
-    override fun Content() {
-        Box(Modifier.fillMaxSize(),contentAlignment=Alignment.Center) {
-            Text(text = "login success!")
-        }
-
-    }
-
-}
-class LoginUIState{
-    var isShow=true;
-}
-sealed interface LoginEvent {
-    object LoginSuccess : LoginEvent
-    object AccountNotExist : LoginEvent
-    object PasswordInvalid : LoginEvent
-    object Other : LoginEvent
-
-}
