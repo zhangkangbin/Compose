@@ -19,6 +19,8 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import cafe.adriel.voyager.androidx.AndroidScreen
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
@@ -27,7 +29,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
-class LoginScreen :Screen{
+class LoginScreen : AndroidScreen() {
 
   //  @Inject
    // lateinit var preference: SharedPreferenceHelper
@@ -79,15 +81,19 @@ class LoginScreen :Screen{
     @Preview
     @Composable
     override fun Content() {
-
-        val logViewModel = LoginScreenViewModel()
+        val logViewModel = viewModel<LoginScreenViewModel>()
+       // val logViewModel = LoginScreenViewModel() 错误写法
+       // val logViewModel: LoginScreenViewModel = viewModel()
         // 负责显示
         val state by logViewModel.loginState.collectAsState()
         val navigator = LocalNavigator.currentOrThrow
 
         if(state.isJump){
             Log.d("mytest", "------end isJump---")
-            navigator.push(LoginSuccessScreen("kang"))
+         //   navigator.push(LoginSuccessScreen("kang"))
+        }else{
+            Log.d("mytest", "------end2 isJump---")
+
         }
 
         var tips by rememberSaveable(Unit) { mutableStateOf("tips") }

@@ -1,6 +1,7 @@
 package com.compose.ui.login
 
 import android.util.Log
+import androidx.lifecycle.ViewModel
 import cafe.adriel.voyager.core.model.ScreenModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -8,7 +9,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 
-class LoginScreenViewModel : ScreenModel {
+class LoginScreenViewModel : ViewModel() {
     private val _loginState = MutableStateFlow(LoginUIState())
 
     //只可读
@@ -32,9 +33,10 @@ class LoginScreenViewModel : ScreenModel {
             return
         }
 
-     /*   repeat(2){
+      repeat(2){
             delay(1000)
-        }*/
+          Log.d("mytest", "------ repeat---")
+        }
         Log.d("mytest", "------end repeat---")
 
         _loginState.value.isShow=true
