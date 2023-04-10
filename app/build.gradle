@@ -86,7 +86,43 @@ dependencies {
     implementation("androidx.preference:preference:1.2.0")
 
 }
+// 获取当前系统时间
+static def getTime() {
+    return new Date().format("yyyyMMddHHmmss")
+}
+android.applicationVariants.all { variant ->
+    variant.outputs.all {
+        String appName = "myoffer"
+        def date = getTime()
+        if (variant.buildType.name == ('release')) {
+            outputFileName = "${variant.versionName}_${buildType.name}$date" + ".apk"
+        }else {
+            outputFileName="myoffer${variant.versionCode}_${buildType.name}.apk"
+        }
+//        outputDirectory = new File("E:\\AndroidStudioProjects\\Compose")
+        //附加一个任务
+        variant.assembleProvider.get().doLast {
+            if (variant.buildType.name == ('release')) {
+                def isWindows = System.getProperty("os.name").toLowerCase().contains("windows")
 
+             //  variant.getPackageApplicationProvider().get().outputDirectory = new File("E:\\AndroidStudioProjects\\Compose")
+                //是否在windows 下
+                if (!isWindows) {
+                    variant.getPackageApplicationProvider().get().outputDirectory = new File("/Users/apple/Downloads/download/")
+                } else {
+                    //使用360加固打包，只加固渠道应用宝。
+                    def name = System.getenv().get("COMPUTERNAME")
+                  //  def channelName=variant.productFlavors[0].name;
+                    //只加固360 和应用宝的apk
+
+
+                }
+
+            }
+        }
+    }
+
+}
 // Allow references to generated code
 /*
 kapt {
