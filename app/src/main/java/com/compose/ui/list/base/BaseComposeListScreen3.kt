@@ -66,7 +66,8 @@ class BaseComposeListScreen3 {
                     LaunchedEffect(stateList) {
 
                         snapshotFlow {
-                            stateList.firstVisibleItemIndex
+                            val firstVisibleItemIndex=stateList.firstVisibleItemIndex
+
                             // stateList.layoutInfo
 
                         }.collect{
