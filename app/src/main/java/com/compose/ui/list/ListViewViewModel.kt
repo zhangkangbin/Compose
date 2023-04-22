@@ -14,12 +14,22 @@ class ListViewViewModel< T :DataInfo> : ViewModel() {
         }
     }
 */
+
+    suspend fun refresh(addInfo: (Int, String) -> T){
+        delay(3000)
+        listData.clear()
+        val start=listData.size
+        for (data in start until start+20){
+            // listData.add(DataInfo(data,"data: $data"))
+            listData.add(addInfo(data,"data: $data"))
+        }
+    }
     fun getList()=listData
 
     suspend fun getHttpData(url:String,addInfo:(Int,String)->T) {
 
         delay(2000)
-        val start=listData.size;
+        val start=listData.size
         for (data in start until start+20){
            // listData.add(DataInfo(data,"data: $data"))
             listData.add(addInfo(data,"data: $data"))

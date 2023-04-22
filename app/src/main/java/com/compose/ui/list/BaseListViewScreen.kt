@@ -4,13 +4,17 @@ import android.util.Log
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Text
+import androidx.compose.material.pullrefresh.PullRefreshIndicator
+import androidx.compose.material.pullrefresh.pullRefresh
+import androidx.compose.material.pullrefresh.rememberPullRefreshState
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -23,6 +27,7 @@ abstract class BaseListViewScreen<T:DataInfo>{
 private val Loading = 1
 private val Finish = 2
 private var loadState = 0
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun ListViewScreenUi() {
 
@@ -40,12 +45,27 @@ fun ListViewScreenUi() {
     LaunchedEffect(Unit){
 
 
-        delay(3000)
+        delay(1000)
 
         hideLoadingPage=false
     }
+    var refreshing by remember { mutableStateOf(false) }
 
-    Box() {
+    fun refresh() = scope.launch {
+        refreshing = true
+
+        viewViewModel.refresh { i, s -> addInfo(i,s) }
+        refreshing = false
+
+    }
+
+    val pullRefreshState= rememberPullRefreshState(refreshing =refreshing , onRefresh = ::refresh)
+
+    
+    Box(
+        Modifier
+            .pullRefresh(pullRefreshState)
+            .fillMaxSize()) {
         AnimatedVisibility(visible = hideLoadingPage) {
             Text(text = "loading", Modifier.fillMaxSize(), textAlign = TextAlign.Center)
         }
@@ -127,6 +147,9 @@ fun ListViewScreenUi() {
 
 
         }
+
+        PullRefreshIndicator(refreshing =refreshing , state = pullRefreshState,Modifier.align(
+            Alignment.TopCenter))
     }
 
 
