@@ -21,32 +21,69 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import cafe.adriel.voyager.core.screen.Screen
+import cafe.adriel.voyager.core.screen.ScreenKey
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import com.baseui.MyBaseUi
 import kotlinx.coroutines.launch
 
 
-class LoginScreen : Screen {
 
+class LoginScreen() : Screen {
+
+    override val key: ScreenKey
+        get() = super.key
   //  @Inject
    // lateinit var preference: SharedPreferenceHelper
+
+    @Preview(
+        showBackground = true,
+        showSystemUi = true)
+    @Composable
+    fun LoginScreenMainUiPreView(){
+
+        var tips by remember {
+            mutableStateOf("")
+        }
+        LoginScreenMainUi(
+            userName=tips,
+            password="kk",
+            loginTipsText="kk",
+            isShow=true,
+            tips="tips",
+            userNameChange={12
+
+                tips=it
+
+            },
+            passwordChange={
+
+            },
+            login = {
+
+            }
+            )
+    }
+
     /**
      * 抽出所有的状态。无状态组件。
      */
     @Composable
-    fun LoginScreenMainUi(userName:String,password: String,loginTipsText:String,
-                          isShow: Boolean,tips:String,
+    fun LoginScreenMainUi(userName:String,
+                          password: String,
+                          loginTipsText:String,
+                          isShow: Boolean,
+                          tips:String,
                           userNameChange:(String)->Unit,
                           passwordChange:(String)->Unit,
                           login:()->Unit) {
 
-
+        Log.d("mytest","----------LoginScreenMainUi --Composable-------")
 
         Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
 
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
-
+                Log.d("mytest","----------LoginScreenMainUi --Column-------")
                 TextField(value = userName, onValueChange = {
                     userNameChange(it)
                 })
@@ -57,9 +94,6 @@ class LoginScreen : Screen {
                     onValueChange = {
 
                         passwordChange(it)
-                    }, modifier = Modifier.onFocusChanged {
-                       Log.d("mytest"," it.hasFocus: ${ it.hasFocus}")
-                       Log.d("mytest"," it.isFocused: ${ it.isFocused}")
                     })
 
                 Text(text = tips)
@@ -141,18 +175,21 @@ class LoginScreen : Screen {
         Column() {
 
         }
+        Log.d("mytest","----------LoginScreenMainUi ---------")
 
-
-        LoginScreenMainUi(userName,password,loginTipsText,state.isShow,tips,{
+        LoginScreenMainUi(userName,password,
+            loginTipsText,state.isShow,
+            tips,{
             userName=it;
         },{
             password=it;
         }){
 
+            Log.d("mytest","LoginScreenMainUi button")
             scope.launch {
-                loginTipsText = "Login...."
+               // loginTipsText = "Login...."
                 logViewModel.login(userName,password)
-                loginTipsText = "Login"
+                //loginTipsText = "Login"
             }
         }
     }

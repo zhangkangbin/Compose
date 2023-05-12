@@ -47,7 +47,7 @@ class ComposeNavigation {
                     //  navController.navigateSingleTopTo("${RouteConfig.Screen_B}/kang")
                     //   navController.navigateSingleTopTo(RouteConfig.Screen_B)
                     navigationViewModel.navigateSingleTopTo("${RouteConfig.Screen_B}/kang")
-
+                   // navigationViewModel.
                 }
             }
 
@@ -59,6 +59,8 @@ class ComposeNavigation {
                   //  navigationViewModel.navigateSingleTopTo(RouteConfig.Screen_C)
                     //源码还是封装成NavDeepLinkRequest
                     // navController.popBackStack()
+
+                    //navController.currentBackStackEntry
                 }
 
             }

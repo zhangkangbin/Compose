@@ -60,7 +60,7 @@ class MainActivity : ComponentActivity() {
                     //ComposeState().ListMainView()
                    // ComposeNavigation().ComposeNavigationScreen()
                     //PostListScreen().Content()
-                    Navigator(PostListScreen())
+                    Navigator(LoginScreen())
 
                    // ListViewScreen().ListViewScreenUi()
                     //MyBaseUi().MyDialog()

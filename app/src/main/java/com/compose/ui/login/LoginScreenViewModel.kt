@@ -21,7 +21,7 @@ class LoginScreenViewModel : ViewModel() {
     val event = _event.asSharedFlow()
     suspend fun login(name: String,password:String) {
         _loginState.value.isShow=false
-
+          Log.d("mytest", "------ login---")
         if(name == "kang"){
             _loginState.value.isShow=true
             _event.emit(LoginEvent.AccountNotExist)
@@ -35,9 +35,9 @@ class LoginScreenViewModel : ViewModel() {
 
       repeat(2){
             delay(1000)
-          Log.d("mytest", "------ repeat---")
+         // Log.d("mytest", "------ repeat---")
         }
-        Log.d("mytest", "------end repeat---")
+      //  Log.d("mytest", "------end repeat---")
 
         _loginState.value.isShow=true
         _loginState.value.isJump=true
