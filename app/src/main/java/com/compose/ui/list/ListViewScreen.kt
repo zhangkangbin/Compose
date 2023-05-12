@@ -8,6 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.google.accompanist.placeholder.material.placeholder
 
 class ListViewScreen : BaseListViewScreen<UserInfo>() {
 
@@ -18,6 +19,7 @@ class ListViewScreen : BaseListViewScreen<UserInfo>() {
         Text(text =dataInfo.userName, modifier = Modifier
             .fillMaxWidth()
             .background(Color.Gray)
+            .placeholder(visible = true)
             .padding(20.dp) )
     }
 

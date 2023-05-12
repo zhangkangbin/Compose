@@ -12,8 +12,8 @@ class LogInterceptor : Interceptor{
     private val UTF8: Charset = Charset.forName("UTF-8")
     override fun intercept(chain: Interceptor.Chain): Response {
         val originalResponse = chain.proceed(chain.request())
-        val source = originalResponse.body?.source();
-        source?.buffer
+        val source = originalResponse.body?.source()
+        source?.buffer//todo
         // Buffer the entire body.
         source?.request(Long.MAX_VALUE);
         val buffer = source?.buffer;

@@ -17,14 +17,17 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.navigator.Navigator
+import com.baseui.MyBaseUi
 import com.compose.api.BaseApi
 import com.compose.api.bean.AticleListBean
 import com.compose.http.HttpTool
 import com.compose.ui.ComposeNavigation
 import com.compose.ui.ComposeState
+import com.compose.ui.atest.TestUi
 import com.compose.ui.hilt.HitScreenMain
 import com.compose.ui.hilt.Println
 import com.compose.ui.hilt.SingletonViewModel
+import com.compose.ui.list.ListViewScreen
 import com.compose.ui.login.LoginScreen
 import com.compose.ui.navigation.PostListScreen
 import com.compose.ui.theme.ComposeTheme
@@ -43,7 +46,6 @@ class MainActivity : ComponentActivity() {
     lateinit var print: Println
 
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -58,8 +60,13 @@ class MainActivity : ComponentActivity() {
                     //ComposeState().ListMainView()
                    // ComposeNavigation().ComposeNavigationScreen()
                     //PostListScreen().Content()
-                   // Navigator(PostListScreen())
-                    Navigator(LoginScreen())
+                    Navigator(PostListScreen())
+
+                   // ListViewScreen().ListViewScreenUi()
+                    //MyBaseUi().MyDialog()
+                  //  TestUi().Foo()
+                    //Navigator(LoginScreen())
+
                     //HitScreenMain().testSingle()
 /*
                     print.print("----------main-------")

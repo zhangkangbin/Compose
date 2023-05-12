@@ -27,20 +27,28 @@ class TestUi {
     @Composable
     fun Foo() {
 
-        var text by remember { mutableStateOf("null") }
-        var enabled by remember { mutableStateOf(true) }
 
-        Button(enabled=enabled,onClick = { text = "$text $text";
+            Box() {
+                var text by remember { mutableStateOf("null") }
+                var enabled by remember { mutableStateOf(true) }
+                Log.d(TAG, "Foo")
+                Button(enabled=enabled,onClick = { text = "$text $text";
 
-            enabled=false
-        }) {
-            Log.d(TAG, "Button content lambda")
-            Wrapper {
-                Log.d(TAG, "B----Wrapper------")
-                Text(text)
+                    enabled=false
+                }) {
+                    Log.d(TAG, "Button content lambda")
+                    Wrapper {
+                        Log.d(TAG, "B----Wrapper------")
+                        Text(text)
+                    }
+                }
             }
-        }
+
+
+        Log.d(TAG, "End")
     }
+
+
 
     @Composable
     fun Wrapper(content: @Composable () -> Unit) {
@@ -50,6 +58,7 @@ class TestUi {
             content()
         }
     }
+
 
 
 
