@@ -24,7 +24,7 @@ class CompositionLocalScreen {
     fun  CompositionLocalScreenUi(){
 
         //LocalColor.current 为蓝色
-         CompositionLocalProvider(LocalColor provides Color.Blue) {
+         CompositionLocalProvider {
              LocalColorText()
         }
         //LocalColor.current is Red
