@@ -31,11 +31,9 @@ import kotlinx.coroutines.launch
 
 class LoginScreen() : Screen {
 
-    override val key: ScreenKey
-        get() = super.key
   //  @Inject
    // lateinit var preference: SharedPreferenceHelper
-
+    
     @Preview(
         showBackground = true,
         showSystemUi = true)
@@ -122,19 +120,21 @@ class LoginScreen() : Screen {
 
 
 
-        if(state.isJump){
+   /*     if(state.isJump){
             Log.d("mytest", "------end isJump---")
          //   navigator.push(LoginSuccessScreen("kang"))
         }else{
             Log.d("mytest", "------end2 isJump---")
 
-        }
+        }*/
 
         var tips by rememberSaveable(Unit) { mutableStateOf("tips") }
-        LaunchedEffect(logViewModel.event){
+        LaunchedEffect(logViewModel.loginState){
 
-            logViewModel.event.collect{
-                when(it){
+            logViewModel.loginState.collect{
+
+                when(it.loginEvent){
+
                     LoginEvent.AccountNotExist->{
                         Log.d("mytest","AccountNotExist")
 
@@ -149,15 +149,16 @@ class LoginScreen() : Screen {
                         //replaceAll
                         navigator.push(LoginSuccessScreen("kang"))
                         // navigator.pop(),至少保留一个
-
-                    //   preference.setString("userName","preference:Kang")
+                        //   preference.setString("userName","preference:Kang")
 
                     }else->{
-                       Log.d("mytest","other")
-                    }
-
+                    Log.d("mytest","other")
                 }
+                }
+
             }
+
+
         }
 
         val scope = rememberCoroutineScope()
