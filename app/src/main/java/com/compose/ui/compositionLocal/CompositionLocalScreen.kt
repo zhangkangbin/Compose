@@ -14,7 +14,17 @@ import androidx.compose.ui.tooling.preview.Preview
 
 class CompositionLocalScreen {
 
-    private val LocalColor = compositionLocalOf { Color.Gray };
+    /**
+     * compositionLocalOf在重组期间更改提供的值只会使读取其 current 值的内容无效。
+     */
+    private val LocalColor = compositionLocalOf { Color.Gray }
+
+    /**
+     * staticCompositionLocalOf：与 compositionLocalOf 不同，Compose 不会跟踪 staticCompositionLocalOf 的读取。
+     * 更改该值会导致提供 CompositionLocal 的整个 content lambda 被重组，而不仅仅是在组合中读取 current 值的位置。
+     *
+     * 如果为 CompositionLocal 提供的值发生更改的可能性微乎其微或永远不会更改，使用 staticCompositionLocalOf 可提高性能。
+     */
     private val LocalData= staticCompositionLocalOf { UserInfo("kk","1234")};
 
     private val LocalData2= compositionLocalOf { UserInfo("kk","1234")};
