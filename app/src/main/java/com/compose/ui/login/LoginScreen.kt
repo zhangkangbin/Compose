@@ -13,7 +13,6 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -21,10 +20,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import cafe.adriel.voyager.core.screen.Screen
-import cafe.adriel.voyager.core.screen.ScreenKey
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
-import com.baseui.MyBaseUi
 import kotlinx.coroutines.launch
 
 
@@ -97,7 +94,7 @@ class LoginScreen() : Screen {
                 Text(text = tips)
                 Button(modifier = Modifier.padding(top = 15.dp), onClick = {
                   login()
-                }, enabled = isShow) {
+                }, enabled = true) {
                     Text(text = loginTipsText)
                 }
 
@@ -120,32 +117,27 @@ class LoginScreen() : Screen {
 
 
 
-   /*     if(state.isJump){
-            Log.d("mytest", "------end isJump---")
-         //   navigator.push(LoginSuccessScreen("kang"))
-        }else{
-            Log.d("mytest", "------end2 isJump---")
-
-        }*/
-
         var tips by rememberSaveable(Unit) { mutableStateOf("tips") }
-        LaunchedEffect(logViewModel.loginState){
 
-            logViewModel.loginState.collect{
+        val loginUiState=logViewModel.loginUiState.collectAsState()
+/*
+        if(loginUiState.value!=LoginUiState.Init){
 
-                when(it.loginEvent){
+            LaunchedEffect(loginUiState.value){
 
-                    LoginEvent.AccountNotExist->{
+                when(loginUiState.value){
+
+                    LoginUiState.AccountNotExist->{
                         Log.d("mytest","AccountNotExist")
 
                         tips="AccountNotExist"
                     }
-                    LoginEvent.PasswordInvalid->{
+                    LoginUiState.PasswordInvalid->{
                         Log.d("mytest","PasswordInvalid")
                         tips="PasswordInvalid"
                     }
-                    LoginEvent.LoginSuccess->{
-                        Log.d("mytest","LoginSuccess")
+                    LoginUiState.LoginSuccess->{
+                        Log.d("mytest","--LoginEvent LoginSuccess----")
                         //replaceAll
                         navigator.push(LoginSuccessScreen("kang"))
                         // navigator.pop(),至少保留一个
@@ -155,11 +147,36 @@ class LoginScreen() : Screen {
                     Log.d("mytest","other")
                 }
                 }
+            }
+        }*/
 
+/*        LaunchedEffect(logViewModel.loginEvent){
+
+            when(logViewModel.loginEvent){
+
+                LoginEvent.AccountNotExist->{
+                    Log.d("mytest","AccountNotExist")
+
+                    tips="AccountNotExist"
+                }
+                LoginEvent.PasswordInvalid->{
+                    Log.d("mytest","PasswordInvalid")
+                    tips="PasswordInvalid"
+                }
+                LoginEvent.LoginSuccess->{
+                    Log.d("mytest","--LoginEvent LoginSuccess----")
+                    //replaceAll
+                    navigator.push(LoginSuccessScreen("kang"))
+                    // navigator.pop(),至少保留一个
+                    //   preference.setString("userName","preference:Kang")
+
+                }else->{
+                Log.d("mytest","other")
+            }
             }
 
 
-        }
+        }*/
 
         val scope = rememberCoroutineScope()
         var userName by remember {
@@ -176,10 +193,10 @@ class LoginScreen() : Screen {
         Column() {
 
         }
-        Log.d("mytest","----------LoginScreenMainUi ---------")
+      //  Log.d("mytest","----------LoginScreenMainUi ---------${state.isShow}")
 
         LoginScreenMainUi(userName,password,
-            loginTipsText,state.isShow,
+            loginTipsText,state,
             tips,{
             userName=it;
         },{

@@ -24,6 +24,7 @@ import com.compose.http.HttpTool
 import com.compose.ui.ComposeNavigation
 import com.compose.ui.ComposeState
 import com.compose.ui.atest.TestUi
+import com.compose.ui.flow.FlowTestScreen
 import com.compose.ui.hilt.HitScreenMain
 import com.compose.ui.hilt.Println
 import com.compose.ui.hilt.SingletonViewModel
@@ -60,7 +61,7 @@ class MainActivity : ComponentActivity() {
                     //ComposeState().ListMainView()
                    // ComposeNavigation().ComposeNavigationScreen()
                     //PostListScreen().Content()
-                    Navigator(LoginScreen())
+                    Navigator(FlowTestScreen())
 
                    // ListViewScreen().ListViewScreenUi()
                     //MyBaseUi().MyDialog()
