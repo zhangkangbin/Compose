@@ -116,7 +116,7 @@ class LoginScreen() : Screen {
         val navigator = LocalNavigator.currentOrThrow
 
 
-
+        logViewModel.loading=false
         var tips by rememberSaveable(Unit) { mutableStateOf("tips") }
 
         val loginUiState=logViewModel.loginUiState.collectAsState()

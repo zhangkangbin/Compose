@@ -1,6 +1,9 @@
 package com.compose.ui.login
 
 import android.util.Log
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.delay
@@ -11,6 +14,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.sync.Mutex
@@ -24,6 +28,7 @@ class LoginScreenViewModel : ViewModel() {
     val loginUiState =_loginUiState.asStateFlow()
     //只可读
     val loginState = _loginState.asStateFlow()
+    var loading by mutableStateOf(false)
 
 
 /*
@@ -45,6 +50,7 @@ class LoginScreenViewModel : ViewModel() {
   //  val event = _event.asSharedFlow()
     suspend fun login(name: String,password:String) {
         _loginState.value=true
+        loading=true
 
           Log.d("mytest", "------ login---")
         if(name == "kang"){
