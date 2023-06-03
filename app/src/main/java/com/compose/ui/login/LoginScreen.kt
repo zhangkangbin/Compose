@@ -25,65 +25,66 @@ import cafe.adriel.voyager.navigator.currentOrThrow
 import kotlinx.coroutines.launch
 
 
-
 class LoginScreen() : Screen {
 
-  //  @Inject
-   // lateinit var preference: SharedPreferenceHelper
-    
+    //  @Inject
+    // lateinit var preference: SharedPreferenceHelper
+
     @Preview(
-        showBackground = true,
-        showSystemUi = true)
+        showBackground = true, showSystemUi = true
+    )
     @Composable
-    fun LoginScreenMainUiPreView(){
+    fun LoginScreenMainUiPreView() {
 
         var tips by remember {
             mutableStateOf("")
         }
-        LoginScreenMainUi(
-            userName=tips,
-            password="kk",
-            loginTipsText="kk",
-            isShow=true,
-            tips="tips",
-            userNameChange={12
+        LoginScreenMainUi(userName = tips,
+            password = "kk",
+            loginTipsText = "kk",
+            isShow = true,
+            tips = "tips",
+            userNameChange = {
+                12
 
-                tips=it
+                tips = it
 
             },
-            passwordChange={
+            passwordChange = {
 
             },
             login = {
 
-            }
-            )
+            })
     }
 
     /**
      * 抽出所有的状态。无状态组件。
      */
     @Composable
-    fun LoginScreenMainUi(userName:String,
-                          password: String,
-                          loginTipsText:String,
-                          isShow: Boolean,
-                          tips:String,
-                          userNameChange:(String)->Unit,
-                          passwordChange:(String)->Unit,
-                          login:()->Unit) {
+    fun LoginScreenMainUi(
+        userName: String,
+        password: String,
+        loginTipsText: String,
+        isShow: Boolean,
+        tips: String,
+        userNameChange: (String) -> Unit,
+        passwordChange: (String) -> Unit,
+        login: () -> Unit
+    ) {
 
-        Log.d("mytest","----------LoginScreenMainUi --Composable-------")
+        Log.d("mytest", "----------LoginScreenMainUi --Composable-------")
 
         Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
 
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                Log.d("mytest","----------LoginScreenMainUi --Column-------")
+                Log.d("mytest", "----------LoginScreenMainUi --Column-------")
                 TextField(value = userName, onValueChange = {
                     userNameChange(it)
                 })
-                TextField(
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password, imeAction = ImeAction.Next),
+                TextField(keyboardOptions = KeyboardOptions(
+                    keyboardType = KeyboardType.Password, imeAction = ImeAction.Next
+                ),
                     value = password,
                     visualTransformation = PasswordVisualTransformation(),
                     onValueChange = {
@@ -93,7 +94,7 @@ class LoginScreen() : Screen {
 
                 Text(text = tips)
                 Button(modifier = Modifier.padding(top = 15.dp), onClick = {
-                  login()
+                    login()
                 }, enabled = true) {
                     Text(text = loginTipsText)
                 }
@@ -105,78 +106,22 @@ class LoginScreen() : Screen {
 
     }
 
+
+
     @Preview
     @Composable
     override fun Content() {
-        val logViewModel = viewModel<LoginScreenViewModel>()
-       // val logViewModel = LoginScreenViewModel() 错误写法
-       // val logViewModel: LoginScreenViewModel = viewModel()
+    /*    val logViewModel = viewModel<LoginScreenViewModel>()
+        // val logViewModel = LoginScreenViewModel() 错误写法
+        // val logViewModel: LoginScreenViewModel = viewModel()
         // 负责显示
         val state by logViewModel.loginState.collectAsState()
         val navigator = LocalNavigator.currentOrThrow
 
 
-        logViewModel.loading=false
+        logViewModel.loading = false
         var tips by rememberSaveable(Unit) { mutableStateOf("tips") }
 
-        val loginUiState=logViewModel.loginUiState.collectAsState()
-/*
-        if(loginUiState.value!=LoginUiState.Init){
-
-            LaunchedEffect(loginUiState.value){
-
-                when(loginUiState.value){
-
-                    LoginUiState.AccountNotExist->{
-                        Log.d("mytest","AccountNotExist")
-
-                        tips="AccountNotExist"
-                    }
-                    LoginUiState.PasswordInvalid->{
-                        Log.d("mytest","PasswordInvalid")
-                        tips="PasswordInvalid"
-                    }
-                    LoginUiState.LoginSuccess->{
-                        Log.d("mytest","--LoginEvent LoginSuccess----")
-                        //replaceAll
-                        navigator.push(LoginSuccessScreen("kang"))
-                        // navigator.pop(),至少保留一个
-                        //   preference.setString("userName","preference:Kang")
-
-                    }else->{
-                    Log.d("mytest","other")
-                }
-                }
-            }
-        }*/
-
-/*        LaunchedEffect(logViewModel.loginEvent){
-
-            when(logViewModel.loginEvent){
-
-                LoginEvent.AccountNotExist->{
-                    Log.d("mytest","AccountNotExist")
-
-                    tips="AccountNotExist"
-                }
-                LoginEvent.PasswordInvalid->{
-                    Log.d("mytest","PasswordInvalid")
-                    tips="PasswordInvalid"
-                }
-                LoginEvent.LoginSuccess->{
-                    Log.d("mytest","--LoginEvent LoginSuccess----")
-                    //replaceAll
-                    navigator.push(LoginSuccessScreen("kang"))
-                    // navigator.pop(),至少保留一个
-                    //   preference.setString("userName","preference:Kang")
-
-                }else->{
-                Log.d("mytest","other")
-            }
-            }
-
-
-        }*/
 
         val scope = rememberCoroutineScope()
         var userName by remember {
@@ -190,27 +135,143 @@ class LoginScreen() : Screen {
             mutableStateOf("Login")
         }
 
-        Column() {
 
-        }
-      //  Log.d("mytest","----------LoginScreenMainUi ---------${state.isShow}")
+        LoginScreenMainUi(userName, password, loginTipsText, state, tips, {
+            userName = it;
+        }, {
+            password = it;
+        }) {
 
-        LoginScreenMainUi(userName,password,
-            loginTipsText,state,
-            tips,{
-            userName=it;
-        },{
-            password=it;
-        }){
-
-            Log.d("mytest","LoginScreenMainUi button")
+            Log.d("mytest", "LoginScreenMainUi button")
             scope.launch {
-               // loginTipsText = "Login...."
-                logViewModel.login(userName,password)
+                // loginTipsText = "Login...."
+                logViewModel.login(userName, password)
                 //loginTipsText = "Login"
             }
+        }*/
+
+        LoginScreenMainUi2Test()
+    }
+
+
+    @Composable
+    fun LoginScreenMainUi2Test(){
+
+        val dataInfo by remember {
+            mutableStateOf(Data())
         }
+        val getDataType={
+            dataInfo
+        }
+
+        val dataChange=fun (dataType:DataType,data:String){
+            if(data.isNotBlank()){
+                dataInfo.loginTipsText=""
+            }
+            when(dataType){
+
+                is DataType.UserName->  dataInfo.userName=data
+                is DataType.Password-> dataInfo.password=data
+            }
+
+
+        }
+        val onClickType=fun (clickType:ClickType){
+
+            "user name  ${dataInfo.userName}".log()
+
+            if(dataInfo.userName.isEmpty()){
+                dataInfo.loginTipsText="user name is empty"
+                "user name is empty".log()
+                return
+            }
+            if(dataInfo.password.isEmpty()){
+                dataInfo.loginTipsText="user password is empty"
+                "user password is empty".log()
+                return
+            }
+            dataInfo.loginTipsText=""
+        }
+        LoginScreenMainUi2(getDataType,dataChange,onClickType)
+    }
+
+    /**
+     * 抽出所有的状态。无状态组件。
+     */
+    @Composable
+    fun LoginScreenMainUi2(
+        getDataType: () -> Data,
+        dataChange: (DataType,String) -> Unit,
+        onClickType: (ClickType) -> Unit
+    ) {
+
+        Log.d("mytest", "----------LoginScreenMainUi --Composable-------")
+
+        Box(
+            Modifier.fillMaxSize(), contentAlignment = Alignment.Center
+        ) {
+
+            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                Log.d("mytest", "----------LoginScreenMainUi --Column-------")
+                TextField(
+                    value = getDataType().userName,
+                    onValueChange = {
+                        dataChange(DataType.UserName,it)
+                    })
+                TextField(keyboardOptions = KeyboardOptions(
+                    keyboardType = KeyboardType.Password, imeAction = ImeAction.Next
+                ),
+                    value = getDataType().password,
+                    visualTransformation = PasswordVisualTransformation(),
+                    onValueChange = {
+
+                        dataChange(DataType.Password,it)
+                      //  passwordChange(it)
+                    })
+
+                Text(text = getDataType().loginTipsText)
+                Button(modifier = Modifier.padding(top = 15.dp), onClick = {
+                    onClickType(ClickType.Login)
+                }, enabled = true) {
+                    Text(text = "Login")
+                }
+
+            }
+
+
+        }
+
     }
 }
 
+  class Data{
+      var userName by mutableStateOf("")
+      var password by mutableStateOf("")
+      var loginTipsText by mutableStateOf("")
 
+  }
+interface ClickType{
+
+    object Login :ClickType
+    object ForgetPassword :ClickType
+
+}
+interface DataChange{
+
+       // get() = mutableStateOf("")
+
+    object Login :ClickType
+    object ForgetPassword :ClickType
+
+}
+interface DataType{
+
+    object UserName :DataType
+    object Password :DataType
+    object LoginTips :DataType
+}
+
+fun String.log(){
+
+    Log.d("mytest",this)
+}

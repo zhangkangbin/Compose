@@ -32,13 +32,7 @@ class FlowTestScreen : Screen {
         val navigator = LocalNavigator.currentOrThrow
         val logViewModel = viewModel<FlowTestScreenViewModel>()
 
-        logViewModel._uiMessageManager.let { message ->
-            LaunchedEffect(message) {
-               // snackbarHostState.showSnackbar(message.message)
-                // Notify the view model that the message has been dismissed
-                Log.d("mytest","message:${message.message.colle}")
-            }
-        }
+
         var userName by remember {
             mutableStateOf("user name")
         }

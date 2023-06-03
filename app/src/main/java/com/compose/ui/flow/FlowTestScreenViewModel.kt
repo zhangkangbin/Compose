@@ -20,18 +20,7 @@ class FlowTestScreenViewModel :ViewModel() {
 
      val uiMessageManager = UiMessageManager()
 
-    val state: StateFlow<DiscoverViewState> = combine(
-        uiMessageManager.message,
-    ) { message,
-        ->
-        DiscoverViewState(
-            message = message,
-        )
-    }.stateIn(
-        scope = viewModelScope,
-        started = SharingStarted.WhileSubscribed(),
-        initialValue = DiscoverViewState.Empty,
-    )
+
     fun login(name:String){
 
 
