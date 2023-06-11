@@ -12,10 +12,16 @@ import androidx.compose.material.*
 
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Dialog
 import cafe.adriel.voyager.navigator.Navigator
 import com.baseui.MyBaseUi
 import com.compose.api.BaseApi
@@ -30,6 +36,7 @@ import com.compose.ui.hilt.Println
 import com.compose.ui.hilt.SingletonViewModel
 import com.compose.ui.list.ListViewScreen
 import com.compose.ui.login.LoginScreen
+import com.compose.ui.login.log
 import com.compose.ui.navigation.PostListScreen
 import com.compose.ui.theme.ComposeTheme
 import com.compose.ui.theme.Purple700
@@ -61,8 +68,9 @@ class MainActivity : ComponentActivity() {
                     //ComposeState().ListMainView()
                    // ComposeNavigation().ComposeNavigationScreen()
                     //PostListScreen().Content()
-                    Navigator(LoginScreen())
-
+                   // Navigator(LoginScreen())
+                    "---onCreate---".log()
+                    DialogUi()
                    // ListViewScreen().ListViewScreenUi()
                     //MyBaseUi().MyDialog()
                   //  TestUi().Foo()
@@ -83,73 +91,81 @@ class MainActivity : ComponentActivity() {
 
 }
 
+
 @Composable
-fun Greeting(name: String) {
+fun rememberDialog(): DialogScreen {
 
-
-   Column {
-       Image(
-           painter = painterResource(R.mipmap.bao),
-           contentDescription = "Contact profile picture",
-           modifier= Modifier
-               .height(100.dp)
-               .width(100.dp)
-               .padding(15.dp)
-       )
-
-
-       Text(text = "Helld  oA $name!", modifier = Modifier
-           .padding(15.dp)
-           .clickable {
-
-               Log.d("mytest", "my is log..");
-
-               getHttpData()
-           })
+    "---rememberDialog---".log()
+   val dialog by remember {
+       mutableStateOf(DialogScreen())
    }
 
+    if(dialog.isShow){
+        Dialog(onDismissRequest = {
+            dialog.dismiss()
 
-}
+        }) {
 
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-    ComposeTheme {
-        Greeting("Android AQQQAAAA")
+            Button(onClick = {
+                dialog.dismiss()
+            }) {
+                Text(text = "dismiss me")
+            }
+
+
+
+        }
+
     }
+
+   return dialog
+
 }
+
+@Preview
+@Composable
+fun DialogUi() {
+
+
+    Box {
+        "---DialogUi--Box-".log()
+        val dialog = rememberDialog()
+
+        Button(onClick = {
+            dialog.show()
+        }) {
+            Text(text = "show me the dialog")
+        }
+    }
+
+    "---DialogUi---".log()
+
+}
+
+class DialogScreen{
+
+    var isShow by mutableStateOf(false)
+
+    fun show(){
+
+        isShow=true
+    }
+
+    fun dismiss(){
+
+        isShow=false
+    }
+
+}
+
+
+
 
 fun log(text:String){
     Log.d("mytest", text)
 
 }
 
-fun getHttpData(){
-
-    HttpTool.getIntance.create(BaseApi::class.java).articleList().enqueue(object :Callback<AticleListBean>{
-        override fun onResponse(call: Call<AticleListBean>, response: Response<AticleListBean>) {
-            response.body()?.errorMsg?.let { Log.d("mytest", it) };
-            val  data=response.body()?.takeIf {
-                it.errorCode==0
-            }?.data?.datas;
-
-            data?.forEach {
-
-                log(it.title)
-            }
-
-           // MessageList(data);
-
-        }
-
-        override fun onFailure(call: Call<AticleListBean>, t: Throwable) {
-
-            Log.d("mytest", t.message.toString())
-
-        }
-
-    });
-}
 
 
 
