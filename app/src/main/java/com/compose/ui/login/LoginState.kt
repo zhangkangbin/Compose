@@ -27,7 +27,7 @@ interface DataChange{
 }
 interface DataType{
 
-    object UserName :DataType
+    class UserName(val name:String) :DataType
     object Password :DataType
     object LoginTips :DataType
 }
